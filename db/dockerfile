@@ -1,0 +1,6 @@
+# 1. Use the official lightweight image
+FROM postgres:15-alpine
+
+# 2. Copy your initialization script
+# This ensures the table is created automatically on the first run
+COPY init.sql /docker-entrypoint-initdb.d/

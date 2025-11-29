@@ -1,0 +1,27 @@
+services:
+  db:
+    build: ./db
+    container_name: postgres-db
+    restart: always
+    # This loads all variables from .env into the container
+    env_file:
+      - .env
+    networks:
+      - internal_net
+    ports:
+      - "5432:5432"
+
+  benchmark:
+    build: ./app
+    container_name: python-benchmark
+    depends_on:
+      - db
+    # Load the same variables so Python knows how to login
+    env_file:
+      - .env
+    networks:
+      - internal_net
+
+networks:
+  internal_net:
+    driver: bridge
